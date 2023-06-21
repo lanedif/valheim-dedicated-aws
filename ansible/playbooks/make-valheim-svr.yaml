@@ -1,0 +1,5 @@
+---
+- hosts: test-svrs
+  remote_user: ubuntu
+  roles:
+    - valheim-svr

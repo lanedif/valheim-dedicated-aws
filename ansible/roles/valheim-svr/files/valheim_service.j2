@@ -1,0 +1,10 @@
+[Unit]
+Description=Service that starts Valheim
+After=network.target
+
+[Service]
+User={{ steam_user }}
+ExecStart={{ valheim_start_script }}
+
+[Install]
+WantedBy=default.target

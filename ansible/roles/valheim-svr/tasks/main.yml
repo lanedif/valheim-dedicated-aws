@@ -1,0 +1,7 @@
+---
+# Update and upgrade
+# tasks file for valheim-svr
+- include_tasks: "prep_os.yaml"
+- include_tasks: "install_steam.yaml"
+- include_tasks: "install_valheim.yaml"
+- include_tasks: "start_valheim.yaml"

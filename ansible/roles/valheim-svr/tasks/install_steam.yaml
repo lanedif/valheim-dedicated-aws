@@ -1,0 +1,51 @@
+- name: Create Steam group
+  become: yes
+  group:
+    name: "{{ steam_group }}"
+    state: present
+
+- name: Create Steam user
+  become: yes
+  user: 
+    name: "{{ steam_user }}"
+    comment: Valheim user
+    group: "{{ steam_group }}"
+    home: "{{ steam_home }}"
+    create_home: yes
+    shell: /bin/bash
+    expires: -1 
+
+## Manual Install 
+- name: Install Steamcmd dependencies
+  become: yes
+  ansible.builtin.apt:
+    name: 
+      - lib32gcc-s1
+      - screen
+
+## Curl steam tars into the steam directory
+- name: Get the SteamCMD install tar from steam
+  become: yes
+  ansible.builtin.get_url:
+    url: "{{ steamcmd_baseurl }}/{{ steamcmd_archive }}"
+    dest: "{{ steam_home }}"
+    owner: "{{ steam_user }}"
+    group: "{{ steam_group }}"
+
+- name: Extract steamcmd archive
+  become: yes
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: "{{ steam_home }}/{{ steamcmd_archive }}"
+    dest: "{{ steam_home }}" 
+    group: "{{ steam_group }}"
+    owner: "{{ steam_user }}"
+
+- name: Set permissions on extracted contents
+  become: yes
+  ansible.builtin.file:
+    path: "{{ steam_home }}"
+    state: directory
+    recurse: yes
+    owner: "{{ steam_user }}"
+    group: "{{ steam_group }}"

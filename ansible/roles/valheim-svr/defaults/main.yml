@@ -1,0 +1,22 @@
+---
+# defaults file for valheim-svr
+steam_user: steam
+steam_group: steam
+steam_home: /home/steam/
+steamcmd_baseurl: "https://steamcdn-a.akamaihd.net/client/installer/"
+steamcmd_archive: "steamcmd_linux.tar.gz"
+
+valheim_StartServer_template: ../files/start_server_sh.j2
+valheim_StartServer_location: /home/steam/valheim/start_server.sh
+
+valheim_server_name: test
+valheim_server_port: 2456
+valheim_world_name: test
+valheim_server_pw: test
+
+valheim_InstallUpdate_template: ../files/InstallUpdate_sh.j2
+valheim_server_path: /home/steam/valheim/
+valheim_service_template: ../files/valheim_service.j2
+valheim_service_location: /etc/systemd/system/valheim.service
+
+valheim_start_script: /home/steam/valheim/start_server.sh

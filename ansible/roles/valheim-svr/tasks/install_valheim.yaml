@@ -1,0 +1,21 @@
+- name: Create a folder for the valheim server
+  become: yes
+  ansible.builtin.file:
+    path: "{{ valheim_server_path }}"
+    state: directory
+    owner: "{{ steam_user }}"
+    group: "{{ steam_group }}"
+    mode: '0755'    
+
+- name: Install Valheim using SteamCMD
+  ansible.builtin.command:
+    cmd: sudo -u steam /home/steam/steamcmd.sh +@sSteamCmdForcePlatformType linux +force_install_dir /home/steam/valheim/ +login anonymous +app_update 896660 -beta none validate +quit
+
+- name: Create the StartServer.sh Template Script # will be started by the service
+  become: yes
+  template:
+    src: "{{ valheim_StartServer_template }}"  # Path to the Jinja2 template file
+    dest: "{{ valheim_StartServer_location }}"
+    owner: "{{ steam_user }}"
+    group: "{{ steam_group }}"
+    mode: '0554'
